@@ -22,7 +22,7 @@ static NSData* RTFDataFromResourceFork(CFURLRef url)
                 if (handle != NULL) {
                     Size handleSize = GetHandleSize(handle);
                     if (handleSize > 0) {
-                        rtfData = [NSData dataWithBytes:*handle length:GetHandleSize(handle)];
+                        rtfData = [NSData dataWithBytes:*handle length:handleSize];
                     }
                     DisposeHandle(handle);
                 }
