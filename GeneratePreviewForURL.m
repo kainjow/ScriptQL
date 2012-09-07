@@ -13,27 +13,24 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
+    @try {
 	NSAppleScript *script = [[NSAppleScript alloc] initWithContentsOfURL:(NSURL *)url error:NULL];
-	if (script)
-	{
+	if (script != nil) {
 		// try RTF data first
 		NSAttributedString *richText = [script richTextSource];
 		NSData *richTextData = [richText RTFFromRange:NSMakeRange(0, [richText length]) documentAttributes:nil];
-		if (richText && richTextData)
-		{
+		if (richTextData != nil) {
 			QLPreviewRequestSetDataRepresentation(preview, (CFDataRef)richTextData, kUTTypeRTF, NULL);
-		}
-		else
-		{
+		} else {
 			// try plain text
-			NSString *plainText = [script source];
-			NSData *plainTextData = [plainText dataUsingEncoding:NSUTF8StringEncoding];
-			if (plainText)
+			NSData *plainTextData = [[script source] dataUsingEncoding:NSUTF8StringEncoding];
+			if (plainTextData != nil) {
 				QLPreviewRequestSetDataRepresentation(preview, (CFDataRef)plainTextData, kUTTypePlainText, NULL);
+            }
 		}
-		
 		[script release];
 	}
+    } @catch (NSException *ex) {}
 
 	[pool drain];
 	
