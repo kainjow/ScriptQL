@@ -11,8 +11,7 @@
 
 OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview, CFURLRef url, CFStringRef contentTypeUTI, CFDictionaryRef options)
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	
+    @autoreleasepool {
     @try {
 	NSAppleScript *script = [[NSAppleScript alloc] initWithContentsOfURL:(NSURL *)url error:NULL];
 	if (script != nil) {
@@ -31,8 +30,7 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 		[script release];
 	}
     } @catch (NSException *ex) {}
-
-	[pool drain];
+    }
 	
     return noErr;
 }
