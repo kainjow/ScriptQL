@@ -46,7 +46,7 @@
 	<key>CFPlugInUnloadFunction</key>
 	<string></string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright (c) 2007-2012 Kevin Wojniak.</string>
+	<string>Copyright (c) 2007-2021 Kevin Wojniak.</string>
 	<key>QLNeedsToBeRunInMainThread</key>
 	<true/>
 	<key>QLPreviewHeight</key>
