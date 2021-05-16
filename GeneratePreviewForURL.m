@@ -11,6 +11,8 @@
 // You can peek at the resource fork to see if the RTF is there by using 'xattr -l <path>'
 static NSData* RTFDataFromResourceFork(CFURLRef url)
 {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     NSData *rtfData = nil;
     FSRef ref;
     if (CFURLGetFSRef((CFURLRef)url, &ref) == true) {
@@ -31,6 +33,7 @@ static NSData* RTFDataFromResourceFork(CFURLRef url)
         }
     }
     return rtfData;
+#pragma clang diagnostic pop
 }
 
 /* -----------------------------------------------------------------------------
@@ -51,7 +54,7 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
         if (script != nil) {
             // try RTF data
             NSAttributedString *richText = [script richTextSource];
-            NSData *richTextData = [richText RTFFromRange:NSMakeRange(0, [richText length]) documentAttributes:nil];
+            NSData *richTextData = [richText RTFFromRange:NSMakeRange(0, [richText length]) documentAttributes:@{}];
             if (richTextData != nil) {
                 QLPreviewRequestSetDataRepresentation(preview, (CFDataRef)richTextData, kUTTypeRTF, NULL);
             } else {
